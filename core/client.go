@@ -5,6 +5,14 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+var (
+	errUnsetRESTAPIKey = errors.New("unset REST API key")
+)
+
+type KakaoSDKClient struct {
+	restyCli *resty.Client
+}
+
 type ClientOptions struct {
 	baseURL string
 }
@@ -17,7 +25,7 @@ func WithBaseURL(baseURL string) ClientOption {
 	}
 }
 
-func ConfigureClient(restyCli *resty.Client, options ...ClientOption) error {
+func Default(options ...ClientOption) (*KakaoSDKClient, error) {
 	o := &ClientOptions{
 		baseURL: defaultKakaoApiHost,
 	}
@@ -26,7 +34,27 @@ func ConfigureClient(restyCli *resty.Client, options ...ClientOption) error {
 	}
 
 	if globalOptions.restAPIKey == "" {
-		return errors.New("REST API key is not set")
+		return nil, errUnsetRESTAPIKey
+	}
+
+	restyCli := resty.New().
+		SetAuthScheme(kakaoAuthScheme).
+		SetAuthToken(globalOptions.restAPIKey).
+		SetBaseURL(o.baseURL)
+
+	return &KakaoSDKClient{restyCli: restyCli}, nil
+}
+
+func NewClient(restyCli *resty.Client, options ...ClientOption) (*KakaoSDKClient, error) {
+	o := &ClientOptions{
+		baseURL: defaultKakaoApiHost,
+	}
+	for _, option := range options {
+		option(o)
+	}
+
+	if globalOptions.restAPIKey == "" {
+		return nil, errUnsetRESTAPIKey
 	}
 
 	restyCli.
@@ -34,5 +62,5 @@ func ConfigureClient(restyCli *resty.Client, options ...ClientOption) error {
 		SetAuthToken(globalOptions.restAPIKey).
 		SetBaseURL(o.baseURL)
 
-	return nil
+	return &KakaoSDKClient{restyCli: restyCli}, nil
 }
