@@ -22,7 +22,7 @@ func ExampleNewClient() {
 		return
 	}
 
-	resp, err := cli.SearchPlaceByKeyword(
+	resp, err := cli.SearchPlacesByKeyword(
 		"카페",
 		common.CategoryGroupCodes.Cafe,
 		&geo.Coordinate{

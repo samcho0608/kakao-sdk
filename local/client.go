@@ -26,7 +26,7 @@ func NewClient(coreClient *core.KakaoSDKClient) (*Client, error) {
 	return &Client{KakaoSDKClient: coreClient}, nil
 }
 
-func (c *Client) SearchPlaceByKeyword(
+func (c *Client) SearchPlacesByKeyword(
 	query string,
 	categoryGroupCode common.CategoryGroupCode,
 	origin *geo.Coordinate,
