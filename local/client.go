@@ -31,9 +31,7 @@ func (c *Client) SearchPlacesByKeyword(
 	categoryGroupCode common.CategoryGroupCode,
 	origin *geo.Coordinate,
 	radiusInMeters int,
-) (
-	*keyword.Response,
-	error,
-) {
+	options ...keyword.Option,
+) (*keyword.Response, error) {
 	return keyword.SearchPlacesByKeyword(c.KakaoSDKClient, query, categoryGroupCode, origin, radiusInMeters)
 }
