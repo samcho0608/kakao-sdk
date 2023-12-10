@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func SearchPlaceByKeyword(
+func SearchPlacesByKeyword(
 	client *core.KakaoSDKClient,
 	query string,
 	categoryGroupCode common.CategoryGroupCode,

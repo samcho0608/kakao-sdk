@@ -35,5 +35,5 @@ func (c *Client) SearchPlacesByKeyword(
 	*keyword.Response,
 	error,
 ) {
-	return keyword.SearchPlaceByKeyword(c.KakaoSDKClient, query, categoryGroupCode, origin, radiusInMeters)
+	return keyword.SearchPlacesByKeyword(c.KakaoSDKClient, query, categoryGroupCode, origin, radiusInMeters)
 }
