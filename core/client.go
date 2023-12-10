@@ -11,6 +11,7 @@ var (
 )
 
 type KakaoSDKClient struct {
+	// TODO(@samcho0608):: 기본적으로 resty의 Client를 사용하되, 차차 다양한 Client들을 지원할 수 있도록 interface로 변경해야합니다.
 	*resty.Client
 }
 
