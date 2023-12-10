@@ -13,25 +13,29 @@ var Sorts = struct {
 }
 
 var QueryParamKeys = struct {
-	Query             string
-	CategoryGroupCode string
-	X                 string
-	Y                 string
-	Radius            string
-	Rect              string
-	Page              string
-	Size              string
-	Sort              string
+	Query                  string
+	CategoryGroupCode      string
+	X                      string
+	Y                      string
+	Radius                 string
+	Rect                   string
+	Page                   string
+	Size                   string
+	Sort                   string
+	InputCoordinateSystem  string
+	OutputCoordinateSystem string
 }{
-	Query:             "query",
-	CategoryGroupCode: "category_group_code",
-	X:                 "x",
-	Y:                 "y",
-	Radius:            "radius",
-	Rect:              "rect",
-	Page:              "page",
-	Size:              "size",
-	Sort:              "sort",
+	Query:                  "query",
+	CategoryGroupCode:      "category_group_code",
+	X:                      "x",
+	Y:                      "y",
+	Radius:                 "radius",
+	Rect:                   "rect",
+	Page:                   "page",
+	Size:                   "size",
+	Sort:                   "sort",
+	InputCoordinateSystem:  "input_coord",
+	OutputCoordinateSystem: "output_coord",
 }
 
 var CategoryGroupCodes = struct {
