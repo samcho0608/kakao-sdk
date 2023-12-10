@@ -3,6 +3,7 @@ package core
 import (
 	"errors"
 	"github.com/go-resty/resty/v2"
+	"strings"
 )
 
 var (
@@ -14,10 +15,18 @@ type KakaoSDKClient struct {
 }
 
 type ClientOptions struct {
-	baseURL string
+	baseURL    string
+	restAPIKey string
 }
 
 type ClientOption func(*ClientOptions)
+
+func DefaultOptions() *ClientOptions {
+	return &ClientOptions{
+		baseURL:    defaultKakaoApiHost,
+		restAPIKey: globalOptions.restAPIKey,
+	}
+}
 
 func WithBaseURL(baseURL string) ClientOption {
 	return func(o *ClientOptions) {
@@ -25,21 +34,30 @@ func WithBaseURL(baseURL string) ClientOption {
 	}
 }
 
-func Default(options ...ClientOption) (*KakaoSDKClient, error) {
-	o := &ClientOptions{
-		baseURL: defaultKakaoApiHost,
+func WithAPICollectionPath(path string) ClientOption {
+	return func(o *ClientOptions) {
+		if strings.HasPrefix(path, "/") {
+			o.baseURL += path
+			return
+		}
+
+		o.baseURL += "/" + path
 	}
+}
+
+func Default(options ...ClientOption) (*KakaoSDKClient, error) {
+	o := DefaultOptions()
 	for _, option := range options {
 		option(o)
 	}
 
-	if globalOptions.restAPIKey == "" {
-		return nil, errUnsetRESTAPIKey
+	if err := validateOptions(o); err != nil {
+		return nil, err
 	}
 
 	restyCli := resty.New().
 		SetAuthScheme(kakaoAuthScheme).
-		SetAuthToken(globalOptions.restAPIKey).
+		SetAuthToken(o.restAPIKey).
 		SetBaseURL(o.baseURL)
 
 	return &KakaoSDKClient{restyCli: restyCli}, nil
@@ -53,8 +71,8 @@ func NewClient(restyCli *resty.Client, options ...ClientOption) (*KakaoSDKClient
 		option(o)
 	}
 
-	if globalOptions.restAPIKey == "" {
-		return nil, errUnsetRESTAPIKey
+	if err := validateOptions(o); err != nil {
+		return nil, err
 	}
 
 	restyCli.
@@ -63,4 +81,16 @@ func NewClient(restyCli *resty.Client, options ...ClientOption) (*KakaoSDKClient
 		SetBaseURL(o.baseURL)
 
 	return &KakaoSDKClient{restyCli: restyCli}, nil
+}
+
+func validateOptions(options *ClientOptions) error {
+	if options.restAPIKey == "" {
+		return errUnsetRESTAPIKey
+	}
+
+	if options.baseURL == "" {
+		return errors.New("empty base URL")
+	}
+
+	return nil
 }
