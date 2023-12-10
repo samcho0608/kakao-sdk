@@ -36,6 +36,6 @@ func ExampleNewClient() {
 		return
 	}
 
-	fmt.Println("response received:", resp.Documents[0].PlaceName)
-	// Output: response received: 세시셀라 아브뉴프랑점
+	fmt.Println("response received:", resp.Meta.IsEnd)
+	// Output: response received: false
 }
