@@ -21,12 +21,12 @@ type SameName struct {
 type Document struct {
 	PlaceName         string `json:"place_name"`
 	Distance          string `json:"distance"`
-	PlaceUrl          string `json:"place_url"`
-	CategoryName      string `json:"category_name"`
+	PlaceURL          string `json:"place_url"`
+	FullCategoryName  string `json:"category_name"`
 	AddressName       string `json:"address_name"`
 	RoadAddressName   string `json:"road_address_name"`
-	Id                string `json:"id"`
-	Phone             string `json:"phone"`
+	PlaceID           string `json:"id"`
+	PhoneNumber       string `json:"phone"`
 	CategoryGroupCode string `json:"category_group_code"`
 	CategoryGroupName string `json:"category_group_name"`
 	X                 string `json:"x"`
