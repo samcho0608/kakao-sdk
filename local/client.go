@@ -2,7 +2,9 @@ package local
 
 import (
 	"kakao-sdk/core"
+	"kakao-sdk/local/category"
 	"kakao-sdk/local/common"
+	"kakao-sdk/local/coordinatesystems"
 	"kakao-sdk/local/keyword"
 	"kakao-sdk/pkg/geo"
 )
@@ -33,5 +35,22 @@ func (c *Client) SearchPlacesByKeyword(
 	radiusInMeters int,
 	options ...keyword.Option,
 ) (*keyword.Response, error) {
-	return keyword.SearchPlacesByKeyword(c.KakaoSDKClient, query, categoryGroupCode, origin, radiusInMeters)
+	return keyword.SearchPlacesByKeyword(c.KakaoSDKClient, query, categoryGroupCode, origin, radiusInMeters, options...)
+}
+
+func (c *Client) SearchPlacesByCategory(
+	categoryGroupCode common.CategoryGroupCode,
+	origin *geo.Coordinate,
+	radiusInMeters int,
+	options ...category.Option,
+) (*category.Response, error) {
+	return category.SearchPlacesByCategory(c.KakaoSDKClient, categoryGroupCode, origin, radiusInMeters, options...)
+}
+
+func (c *Client) ConvertCoordinateSystem(
+	coordinate *geo.Coordinate,
+	inputCoordinateSystem geo.CoordinateSystem,
+	outputCoordinateSystem geo.CoordinateSystem,
+) (*coordinatesystems.Response, error) {
+	return coordinatesystems.ConvertCoordinateSystem(c.KakaoSDKClient, coordinate, inputCoordinateSystem, outputCoordinateSystem)
 }
