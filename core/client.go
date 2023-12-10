@@ -11,7 +11,7 @@ var (
 )
 
 type KakaoSDKClient struct {
-	restyCli *resty.Client
+	*resty.Client
 }
 
 type ClientOptions struct {
@@ -55,15 +55,15 @@ func Default(options ...ClientOption) (*KakaoSDKClient, error) {
 		return nil, err
 	}
 
-	restyCli := resty.New().
+	client := resty.New().
 		SetAuthScheme(kakaoAuthScheme).
 		SetAuthToken(o.restAPIKey).
 		SetBaseURL(o.baseURL)
 
-	return &KakaoSDKClient{restyCli: restyCli}, nil
+	return &KakaoSDKClient{Client: client}, nil
 }
 
-func NewClient(restyCli *resty.Client, options ...ClientOption) (*KakaoSDKClient, error) {
+func NewClient(client *resty.Client, options ...ClientOption) (*KakaoSDKClient, error) {
 	o := &ClientOptions{
 		baseURL: defaultKakaoApiHost,
 	}
@@ -75,12 +75,12 @@ func NewClient(restyCli *resty.Client, options ...ClientOption) (*KakaoSDKClient
 		return nil, err
 	}
 
-	restyCli.
+	client.
 		SetAuthScheme(kakaoAuthScheme).
 		SetAuthToken(globalOptions.restAPIKey).
 		SetBaseURL(o.baseURL)
 
-	return &KakaoSDKClient{restyCli: restyCli}, nil
+	return &KakaoSDKClient{Client: client}, nil
 }
 
 func validateOptions(options *ClientOptions) error {
