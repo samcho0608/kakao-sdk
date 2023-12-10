@@ -26,7 +26,7 @@ func SearchPlacesByKeyword(
 
 	respJSON, err := client.NewRequest().
 		SetQueryParams(queryParams).
-		Get(path)
+		Get(apiPath)
 	if err != nil {
 		return nil, err
 	}

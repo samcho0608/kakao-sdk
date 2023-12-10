@@ -1,5 +1,5 @@
 package keyword
 
 const (
-	path = "/search/keyword.json"
+	apiPath = "/search/keyword.json"
 )
