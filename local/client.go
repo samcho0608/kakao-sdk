@@ -2,6 +2,7 @@ package local
 
 import (
 	"kakao-sdk/core"
+	"kakao-sdk/local/address"
 	"kakao-sdk/local/category"
 	"kakao-sdk/local/common"
 	"kakao-sdk/local/coordinatesystems"
@@ -53,4 +54,11 @@ func (c *Client) ConvertCoordinateSystem(
 	outputCoordinateSystem geo.CoordinateSystem,
 ) (*coordinatesystems.Response, error) {
 	return coordinatesystems.ConvertCoordinateSystem(c.KakaoSDKClient, coordinate, inputCoordinateSystem, outputCoordinateSystem)
+}
+
+func (c *Client) SearchPlacesByAddress(
+	query string,
+	options ...address.Option,
+) (*address.Response, error) {
+	return address.SearchPlacesByAddress(c.KakaoSDKClient, query, options...)
 }
