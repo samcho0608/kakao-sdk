@@ -1,7 +1,7 @@
 package address
 
 const (
-	apiPath = "/v2/local/search/address.json"
+	apiPath = "/search/address.json"
 )
 
 type AnalyzeType string

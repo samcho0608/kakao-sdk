@@ -16,8 +16,8 @@ type Document struct {
 	RoadAddress RoadAddress `json:"road_address"`
 	AddressName string      `json:"address_name"`
 	AddressType string      `json:"address_type"`
-	X           float64     `json:"x"`
-	Y           float64     `json:"y"`
+	X           string      `json:"x"`
+	Y           string      `json:"y"`
 }
 
 type Address struct {
